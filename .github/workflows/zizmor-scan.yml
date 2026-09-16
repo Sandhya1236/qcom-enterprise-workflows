@@ -209,6 +209,7 @@ jobs:
         with:
           # Passing an explicit config = zizmor "global discovery": any
           # repo-local zizmor.yml in the PR is IGNORED. See .github/zizmor.md.
+          token: ${{ steps.app-token.outputs.token }}
           config: ${{ steps.policy.outputs.config }}
           advanced-security: true
           online-audits: true
@@ -227,6 +228,7 @@ jobs:
         continue-on-error: ${{ env.ZIZMOR_FAIL_SEVERITY == 'never' }}
         uses: zizmorcore/zizmor-action@5f14fd08f7cf1cb1609c1e344975f152c7ee938d # v0.5.6
         with:
+          token: ${{ steps.app-token.outputs.token }}
           config: ${{ steps.policy.outputs.config }}
           advanced-security: false
           annotations: true
