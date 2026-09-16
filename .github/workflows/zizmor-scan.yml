@@ -98,9 +98,17 @@ jobs:
       contents: read         # clone the repo under audit (private/internal repos)
       actions: read          # read workflow run metadata (private/internal repos)
     steps:
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Checkout repository under audit
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
+          token: ${{ steps.app-token.outputs.token }}
           persist-credentials: false
 
       # Fetch the trusted central policy from a pinned SHA. Because this is a
